@@ -1,4 +1,4 @@
-var HTTPCode = require("../utils/HTTPCode.js")
+var Constants = require("../utils/Constants.js")
 var moment = require("moment");
 
 const FormValidator = {
@@ -63,25 +63,24 @@ const FormValidator = {
         /** Return a string with the list of message error. "" (empty string if no error)
          * data is a JSON object
          */
-        var errorString = "Field(s) " + FormValidator.checkData(FormValidator.isNameValid, jsonObject.firstname, "1 (First Name), ") +
-            FormValidator.checkData(FormValidator.isNameValid, jsonObject.middlename, "2 (Middle Name), ", false) +
-            FormValidator.checkData(FormValidator.isNameValid, jsonObject.lastname, "3 (Last Name), ") +
-            FormValidator.checkData(FormValidator.isGenderValid, jsonObject.gender, "4 (Gender), ") +
-            FormValidator.checkData(FormValidator.isPlaceValid, jsonObject.birthPlace, "5 (Birth Place), ") +
-            FormValidator.checkData(FormValidator.isDateValid, jsonObject.birthdate, "6 (Birth Date), ") +
-            FormValidator.checkData(FormValidator.isNameValid, jsonObject.parent1, "7 (Parent 1), ", false) +
-            FormValidator.checkData(FormValidator.isNameValid, jsonObject.parent2, "8 (Parent 2), ", false) +
-            FormValidator.checkData(FormValidator.isDateValid, jsonObject.dateRecognitionParent1, "9 (Date recognition parent), ", false) +
-            FormValidator.checkData(FormValidator.isDateValid, jsonObject.dateRecognitionParent2, "9 (Date recognition parent), ", false);
-        if (errorString === "") {
-            return {'message': jsonObject, 'code': HTTPCode.SUCCESS};
+
+        if (Constants.CERTIFICATE_ARRAY.every(field => jsonObject.hasOwnProperty(field))) {
+
+            var errorString = FormValidator.checkData(FormValidator.isNameValid, jsonObject.firstname, "1 (First Name), ") +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.middlename, "2 (Middle Name), ", false) +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.lastname, "3 (Last Name), ") +
+                FormValidator.checkData(FormValidator.isGenderValid, jsonObject.gender, "4 (Gender), ") +
+                FormValidator.checkData(FormValidator.isPlaceValid, jsonObject.birthPlace, "5 (Birth Place), ") +
+                FormValidator.checkData(FormValidator.isDateValid, jsonObject.birthdate, "6 (Birth Date), ") +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.parent1, "7 (Parent 1), ", false) +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.parent2, "8 (Parent 2), ", false) +
+                FormValidator.checkData(FormValidator.isDateValid, jsonObject.dateRecognitionParent1, "9 (Date recognition parent), ", false) +
+                FormValidator.checkData(FormValidator.isDateValid, jsonObject.dateRecognitionParent2, "10 (Date recognition parent), ", false);
+
         } else {
-            return {
-                'message': errorString.substring(0, errorString.length - 2) + " are invalid.",
-                'code': HTTPCode.BAD_REQUEST
-            };
-            // "are" can be replace by "is" in certain case
+            errorString = "missing fields  "
         }
+        return errorString
     }
 };
 
