@@ -10,10 +10,21 @@ router.post('/certificate/validate',  function (req, res) {
 });
 
 router.post('/certificate/create',  async function (req, res) {
-  var certificate = formHandler.parseForm(req.body);
-  delete certificate.phoneNumber;
-  var response = await firebaseHandler.postCertificate(certificate);
-  res.send(response);
+  console.log(req.body);
+  console.log("DEBUG >>> Req body passed");
+  if (req.body === undefined)
+    console.log("Req body is undefined");
+  else
+    console.log("not undefined");
+  var validateForm = formHandler.validateForm(req.body);
+  if (validateForm.code === 400) {
+    res.status(validateForm.code);
+    res.send(validateForm)
+  } else {
+      delete validateForm.message.phoneNumber;
+      var response = await firebaseHandler.postCertificate(validateForm.message);
+      res.send(response);
+  }
 });
 
 
