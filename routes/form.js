@@ -10,7 +10,9 @@ router.post('/certificate/validate',  function (req, res) {
 });
 
 router.post('/certificate/create',  async function (req, res) {
-  var response = await firebaseHandler.postCertificate(formHandler.parseForm(req.body));
+  var certificate = formHandler.parseForm(req.body);
+  delete certificate.phoneNumber;
+  var response = await firebaseHandler.postCertificate(certificate);
   res.send(response);
 });
 
