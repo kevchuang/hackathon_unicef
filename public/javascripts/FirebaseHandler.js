@@ -25,8 +25,15 @@ const firebaseHandler = {
     try {
       await db.collection('certificates').add(certificate);
       console.log('Added document');
+      return ({
+          code: 200,
+          message: certificate
+      })
     } catch (error) {
-      next(error)
+      return ({
+          code: 400,
+          message: "cannot add certificat"
+      })
     }
   },
 
