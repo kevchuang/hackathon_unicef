@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const formHandler = require("../public/javascripts/FormHandler.js");
 
-router.post('/certificate',  function (req, res, next) {
-  console.log(req)
-  res.send({result: "success", data: req.body})
+router.post('/certificate/validate',  function (req, res) {
+  res.send({result: "success", data: formHandler.validateForm(req.body)})
 });
 
-router.get('/certificate',  function (req, res, next) {
+router.get('/certificate/creation',  function (req, res) {
   res.send({result: "success"})
 });
 
