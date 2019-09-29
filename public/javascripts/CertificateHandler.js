@@ -1,0 +1,5 @@
+const CertificateHandler = {
+    createCertificate(certificate) {
+
+    }
+};
