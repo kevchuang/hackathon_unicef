@@ -38,20 +38,17 @@ const firebaseHandler = {
     }
   },
 
-  getCertificate: async (firstname, lastname, birthdate) => {
-    
-  },
-
   getAddress: async (phone) => {
     try {
       const snapshot = await db.collection('users').where('phone', '==', phone).get();
       if (snapshot.empty) {
-        const err = new error;
-        return(err);
+        return({authorized: false});
       } else {
-        snapshot.forEach(doc => {
-          return(doc.publicAddress);
+        var address = "";
+        await snapshot.forEach(doc => {
+          address = doc.publicAddress;
         })
+        return({authorized: true, address: address});
       }
     } catch (error) {
       next(error)
