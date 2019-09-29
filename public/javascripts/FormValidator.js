@@ -81,6 +81,26 @@ const FormValidator = {
             errorString = "missing fields  "
         }
         return errorString
+    },
+
+    checkAllData2(jsonObject) {
+        /** Return a string with the list of message error. "" (empty string if no error)
+         * data is a JSON object
+         */
+
+        if (Constants.RETRIEVE_CERTIFICATE_ARRAY.every(field => jsonObject.hasOwnProperty(field))) {
+
+            var errorString = FormValidator.checkData(FormValidator.isNameValid, jsonObject.firstname, "1 (First Name), ") +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.middlename, "2 (Middle Name), ", false) +
+                FormValidator.checkData(FormValidator.isNameValid, jsonObject.lastname, "3 (Last Name), ") +
+                FormValidator.checkData(FormValidator.isGenderValid, jsonObject.gender, "4 (Gender), ") +
+                FormValidator.checkData(FormValidator.isPlaceValid, jsonObject.birthPlace, "5 (Birth Place), ") +
+                FormValidator.checkData(FormValidator.isDateValid, jsonObject.birthdate, "6 (Birth Date), ");
+
+        } else {
+            errorString = "missing fields  "
+        }
+        return errorString
     }
 };
 

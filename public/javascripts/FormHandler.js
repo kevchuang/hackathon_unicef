@@ -31,7 +31,22 @@ const FormHandler = {
             };
             // "are" can be replace by "is" in certain case
         }
+    },
 
+    validateForm2(smsObject) {
+        var parsingSMS = FormHandler.parseForm(smsObject);
+
+        var errorMessage = FormValidator.checkAllData2(parsingSMS);
+
+        if (errorMessage === "") {
+            return {'message': parsingSMS, 'code': Constants.HTTPCode.SUCCESS};
+        } else {
+            return {
+                'message': "Error(s) were spotted : " + errorMessage.substring(0, errorMessage.length - 2) ,
+                'code': Constants.HTTPCode.BAD_REQUEST
+            };
+            // "are" can be replace by "is" in certain case
+        }
     }
 
 };

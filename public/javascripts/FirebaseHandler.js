@@ -24,16 +24,53 @@ const firebaseHandler = {
   postCertificate: async (certificate) => {
     try {
       await db.collection('certificates').add(certificate);
-      console.log('Added document');
       return ({
           code: 200,
           message: certificate
       })
     } catch (error) {
-      console.log(error)
       return ({
           code: 400,
-          message: "cannot add certificat"
+          message: "cannot add certificate"
+      })
+    }
+  },
+
+  getCertificate: async (firstname, middlename, lastname, gender, birthPlace, birthdate) => {
+    try {
+      const firstnameQuery = db.collection('certificates').where('firstname', '==', firstname);
+      const middlenameQuery = firstnameQuery.where('middlename', '==', middlename);
+      const lastnameQuery = middlenameQuery.where('lastname', '==', lastname);
+      const genderQuery = lastnameQuery.where('gender', '==', gender);
+      const birthPlaceQuery = genderQuery.where('birthPlace', '==', birthPlace);
+      const birthdateQuery = birthPlaceQuery.where('birthdate', '==', birthdate);
+      const snapshot = await birthdateQuery.get();
+      if (snapshot.empty) {
+        return ({
+          code: 404,
+          message: "no certificate found"
+        })
+      } else {
+        var certificatesList = []
+        var responseString = "Certificate(s) found : "
+        await snapshot.forEach(doc => {
+          const data = doc.data()
+          certificatesList.push(doc.data());
+          responseString = responseString.concat(
+            "firstname : ",data.firstname,
+            ", middlename : ",data.middlename,
+            ", lastname : ", data.lastname,
+            ", gender : ", data.gender,
+            ", birthplace : ", data.birthPlace,
+            ", birthdate : ", data.birthdate, "; ")
+          console.log(responseString)
+        })
+        return({ code: 200, message: responseString});
+      }
+    } catch (error) {
+      return ({
+          code: 404,
+          message: "cannot find certificate"
       })
     }
   },
