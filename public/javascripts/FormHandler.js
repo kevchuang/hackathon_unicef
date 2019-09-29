@@ -1,5 +1,5 @@
 var Constants = require('./../utils/Constants.js');
-var FormValidator = require('./../javascripts/FormValidator.js');
+var FormValidator = require('./FormValidator.js');
 
 const FormHandler = {
     parseForm(smsObject) {
