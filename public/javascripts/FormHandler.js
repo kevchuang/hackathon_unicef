@@ -5,7 +5,7 @@ const FormHandler = {
     parseForm(smsObject) {
     var parsingSMS = {};
     var i = 0;
-    var splitSMS = smsObject.message.split('\n');
+    var splitSMS = smsObject.message.split('/');
     splitSMS.forEach(field => {
         var splitField = field.split(")");
         if (splitField.length === 2) {
