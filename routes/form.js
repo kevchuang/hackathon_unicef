@@ -9,9 +9,9 @@ router.post('/certificate/validate',  function (req, res) {
   res.send(formHandler.validateForm(req.body));
 });
 
-router.post('/certificate/create',  function (req, res) {
-  firebaseHandler.postCertificate(req.body.message);
-
+router.post('/certificate/create',  async function (req, res) {
+  var response = await firebaseHandler.postCertificate(req.body.message);
+  res.send(response);
 });
 
 

@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-let serviceAccount = require({
+let serviceAccount = {
   "type": "service_account",
   "project_id": "hackathonunicef",
   "private_key_id": "36ca304a98012eae961e30763eaa27e9e00d5067",
@@ -11,7 +11,7 @@ let serviceAccount = require({
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-cmehr%40hackathonunicef.iam.gserviceaccount.com"
-});
+};
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -30,6 +30,7 @@ const firebaseHandler = {
           message: certificate
       })
     } catch (error) {
+      console.log(error)
       return ({
           code: 400,
           message: "cannot add certificat"
