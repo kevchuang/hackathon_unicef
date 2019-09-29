@@ -62,8 +62,11 @@ const firebaseHandler = {
             ", lastname : ", data.lastname,
             ", gender : ", data.gender,
             ", birthplace : ", data.birthPlace,
-            ", birthdate : ", data.birthdate, "; ")
-          console.log(responseString)
+            ", birthdate : ", data.birthdate,
+            ", parent 1 : ", data.parent1,
+            ", parent 2 : ", data.parent2,
+            ", recognition date parent 1 : ", data.dateRecognitionParent1,
+            ", recognition date parent 2 : ", data.dateRecognitionParent2, "; ")
         })
         return({ code: 200, message: responseString});
       }
